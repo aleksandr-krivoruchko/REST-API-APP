@@ -13,21 +13,19 @@ async function login(req, res, next) {
     if (error) throw createError(400, error.message);
 
     const user = await User.findOne({ email });
-    if (!user) {
-      throw createError(401, "Email or password is wrong");
-    }
-
     const passCompare = bcrypt.compareSync(password, user.password);
 
-    if (!passCompare) {
-      throw createError(401, "Email or password is wrong");
+    if (!user || !user.verify || !passCompare) {
+      throw createError(401, "Email or password is wrong or not verify");
     }
 
     const payload = {
       id: user._id,
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
     await User.findByIdAndUpdate(user._id, { token });
+
     createResponse(201, res, { token: token });
   } catch (error) {
     next(error);
