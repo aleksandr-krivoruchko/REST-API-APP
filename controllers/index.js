@@ -10,6 +10,8 @@ const logout = require("./logout");
 const userCurrent = require("./userCurrent");
 const updateUserSubscription = require("./updateUserSubscription");
 const updateUserAvatar = require("./updateUserAvatar");
+const verifyEmail = require("./verifyEmail");
+const resendingEmail = require("./resendingEmail");
 
 module.exports = {
   getAll,
@@ -24,4 +26,6 @@ module.exports = {
   userCurrent,
   updateUserSubscription,
   updateUserAvatar,
+  verifyEmail,
+  resendingEmail,
 };
